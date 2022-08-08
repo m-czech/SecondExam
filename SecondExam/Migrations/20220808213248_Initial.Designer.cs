@@ -12,7 +12,7 @@ using SecondExam.Repository;
 namespace SecondExam.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20220808172156_Initial")]
+    [Migration("20220808213248_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -131,7 +131,7 @@ namespace SecondExam.Migrations
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("SecondExam.Entities.EducationalMaterialType", "EducationalMaterialType")
-                        .WithMany()
+                        .WithMany("EducationalMaterials")
                         .HasForeignKey("EducationalMaterialTypeId");
 
                     b.Navigation("Author");
@@ -156,6 +156,11 @@ namespace SecondExam.Migrations
             modelBuilder.Entity("SecondExam.Entities.EducationalMaterial", b =>
                 {
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("SecondExam.Entities.EducationalMaterialType", b =>
+                {
+                    b.Navigation("EducationalMaterials");
                 });
 #pragma warning restore 612, 618
         }

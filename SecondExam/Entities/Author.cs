@@ -6,5 +6,5 @@ public class Author
     public string? Name { get; set; }
     public string? Description { get; set; }
     public ICollection<EducationalMaterial>? Materials { get; set; }
-    public int? CreatedMaterials { get; set; }
+    public int? CreatedMaterials => Materials?.Count;
 }

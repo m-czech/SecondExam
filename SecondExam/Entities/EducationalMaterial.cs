@@ -1,4 +1,6 @@
-﻿namespace SecondExam.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SecondExam.Entities;
 
 public class EducationalMaterial
 {
@@ -10,6 +12,7 @@ public class EducationalMaterial
     public string? Location { get; set; }
     public int? EducationalMaterialTypeId { get; set; }
     public EducationalMaterialType? EducationalMaterialType { get; set; }
+    [ForeignKey("ReviewedMaterialId")]
     public ICollection<EducationalMaterialReview>? Reviews { get; set; }
     public DateTime? PublicationDate { get; set; }
 }

@@ -21,9 +21,17 @@ public class EducationalMaterialRepository : RepositoryBase<EducationalMaterial>
         Delete(material);
     }
 
+    public async Task<IEnumerable<EducationalMaterial>> GetAllAsync()
+    {
+        return await GetAll()
+            .Include(material => material.Reviews)
+            .ToListAsync();
+    }
+
     public async Task<EducationalMaterial> GetSingleAsync(int id)
     {
         return await GetByCondition(material => material.EducationalMaterialTypeId == id)
+            .Include(material => material.Reviews)
             .SingleOrDefaultAsync();
     }
 

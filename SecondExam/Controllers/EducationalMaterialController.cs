@@ -73,13 +73,34 @@ public class EducationalMaterialController : ControllerBase
     }
 
     [HttpGet]
-    [Route("hihi")]
-    public async Task<IActionResult> GetMaterialsForGivenAuthor(int id)
+    [Route("average")]
+    public async Task<IActionResult> GetEducationalMaterialsForGivenAuthorWithAverageReviewsAboveFive(int authorId)
     {
-        var fetchedAuthors = await _repositories.Author.GetSingle(id);
-        if (fetchedAuthors == null) return NotFound();
-        if (fetchedAuthors.Materials == null) return NotFound();
-        
-        return Ok(_mapper.Map<IEnumerable<GetEducationalMaterialDto>>(fetchedAuthors.Materials));
+        var fetchedMaterials = await _repositories.EducationalMaterial.GetAllAsync();
+        var materialsFilteredByAuthor = fetchedMaterials.Where(material => material.AuthorId == authorId);
+        var materialsFilteredByAuthorAndRating = new List<EducationalMaterial>();
+        foreach (var material in materialsFilteredByAuthor)
+        {
+            float reviewSum = 0;
+            if (material.Reviews == null) break;
+            material.Reviews.ToList().ForEach(review => reviewSum += (float)review.DigitReview!);
+            var average = reviewSum = reviewSum / material.Reviews.Count();
+            if (average > 5) materialsFilteredByAuthorAndRating.Add(material);
+        }
+
+        return Ok(_mapper.Map<IEnumerable<GetEducationalMaterialDto>>(materialsFilteredByAuthorAndRating));
+    }
+
+    [HttpGet]
+    [Route("type")]
+    public async Task<IActionResult> GetEducationalMaterialByType(int typeId)
+    {
+        var materialType = await _repositories.EducationalMaterialType.GetSingleAsync(typeId);
+        if (materialType == null) return NotFound($"Specified material id: {typeId} has not been found");
+
+        var materials = await _repositories.EducationalMaterial.GetAllAsync();
+        var filteredMaterials = materials.Where(material => material.EducationalMaterialTypeId == typeId);
+
+        return Ok(_mapper.Map<IEnumerable<GetEducationalMaterialDto>>(filteredMaterials));
     }
 }

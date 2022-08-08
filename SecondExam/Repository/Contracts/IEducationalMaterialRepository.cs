@@ -7,4 +7,5 @@ public interface IEducationalMaterialRepository
     public void CreateEducationalMaterial(EducationalMaterial material);
     public void DeleteEducationalMaterial(EducationalMaterial material);
     public Task<EducationalMaterial> GetSingleAsync(int id);
+    public Task<IEnumerable<EducationalMaterial>> GetAllAsync();
 }
