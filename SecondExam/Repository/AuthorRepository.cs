@@ -10,7 +10,7 @@ public class AuthorRepository : RepositoryBase<Author>, IAuthorRepository
     {
 
     }
-    public async Task<Author> GetSingle(int id)
+    public async Task<Author> GetSingleAsync(int id)
     {
         return await GetByCondition(author => author.Id == id)
             .Include(author => author.Materials)

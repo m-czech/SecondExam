@@ -27,7 +27,7 @@ public class EducationalMaterialController : ControllerBase
             return NotFound("Specified material id has not been found");
         }
 
-        var author = await _repositories.Author.GetSingle(newMaterial.AuthorId);
+        var author = await _repositories.Author.GetSingleAsync(newMaterial.AuthorId);
         if (author == null)
         {
             return NotFound("Specified author id has not been found!");
