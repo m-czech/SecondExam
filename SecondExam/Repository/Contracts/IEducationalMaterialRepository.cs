@@ -1,6 +1,6 @@
 ﻿namespace SecondExam.Repository.Contracts
 {
-    public class IEducationalMaterialRepository
+    public interface IEducationalMaterialRepository
     {
     }
 }
