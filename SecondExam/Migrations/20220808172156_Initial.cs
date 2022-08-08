@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -47,7 +48,8 @@ namespace SecondExam.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EducationalMaterialTypeId = table.Column<int>(type: "int", nullable: false)
+                    EducationalMaterialTypeId = table.Column<int>(type: "int", nullable: true),
+                    PublicationDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,8 +63,7 @@ namespace SecondExam.Migrations
                         name: "FK_EducationalMaterials_EducationalMaterialTypes_EducationalMaterialTypeId",
                         column: x => x.EducationalMaterialTypeId,
                         principalTable: "EducationalMaterialTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

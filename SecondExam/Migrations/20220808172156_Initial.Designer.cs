@@ -12,7 +12,7 @@ using SecondExam.Repository;
 namespace SecondExam.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20220808161900_Initial")]
+    [Migration("20220808172156_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,11 +60,14 @@ namespace SecondExam.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EducationalMaterialTypeId")
+                    b.Property<int?>("EducationalMaterialTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PublicationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -129,9 +132,7 @@ namespace SecondExam.Migrations
 
                     b.HasOne("SecondExam.Entities.EducationalMaterialType", "EducationalMaterialType")
                         .WithMany()
-                        .HasForeignKey("EducationalMaterialTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EducationalMaterialTypeId");
 
                     b.Navigation("Author");
 
@@ -141,7 +142,7 @@ namespace SecondExam.Migrations
             modelBuilder.Entity("SecondExam.Entities.EducationalMaterialReview", b =>
                 {
                     b.HasOne("SecondExam.Entities.EducationalMaterial", "ReviewedMaterial")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("ReviewedMaterialId");
 
                     b.Navigation("ReviewedMaterial");
@@ -150,6 +151,11 @@ namespace SecondExam.Migrations
             modelBuilder.Entity("SecondExam.Entities.Author", b =>
                 {
                     b.Navigation("Materials");
+                });
+
+            modelBuilder.Entity("SecondExam.Entities.EducationalMaterial", b =>
+                {
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }
