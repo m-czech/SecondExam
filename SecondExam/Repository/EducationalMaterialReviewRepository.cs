@@ -16,17 +16,17 @@ public class EducationalMaterialReviewRepository : RepositoryBase<EducationalMat
         Create(review);
     }
 
-    public void DeleteEducationalMaterial(EducationalMaterialReview review)
+    public void DeleteEducationalMaterialReview(EducationalMaterialReview review)
     {
         Delete(review);
     }
 
     public async Task<EducationalMaterialReview> GetSingleAsync(int id)
     {
-        return await GetSingleAsync(id);
+        throw new NotImplementedException();
     }
 
-    public async Task<EducationalMaterialReview> GetSingleByCondition(Expression<Func<EducationalMaterialReview, bool>> expression)
+    public async Task<EducationalMaterialReview> GetSingleByConditionAsync(Expression<Func<EducationalMaterialReview, bool>> expression)
     {
         return await GetByCondition(expression).SingleOrDefaultAsync();
     }

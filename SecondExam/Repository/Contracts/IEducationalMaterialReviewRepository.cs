@@ -6,7 +6,7 @@ namespace SecondExam.Repository.Contracts;
 public interface IEducationalMaterialReviewRepository
 {
     public void CreateEducationalMaterialReview(EducationalMaterialReview review);
-    public void DeleteEducationalMaterial(EducationalMaterialReview review);
+    public void DeleteEducationalMaterialReview(EducationalMaterialReview review);
     public Task<EducationalMaterialReview> GetSingleAsync(int id);
-    public Task<EducationalMaterialReview> GetSingleByCondition(Expression<Func<EducationalMaterialReview, bool>> expression);
+    public Task<EducationalMaterialReview> GetSingleByConditionAsync(Expression<Func<EducationalMaterialReview, bool>> expression);
 }
