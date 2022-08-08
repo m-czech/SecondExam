@@ -12,7 +12,7 @@ using SecondExam.Repository;
 namespace SecondExam.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20220808112924_Initial")]
+    [Migration("20220808161900_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,20 +60,20 @@ namespace SecondExam.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EducationalMaterialTypeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TypeId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("EducationalMaterialTypeId");
 
                     b.ToTable("EducationalMaterials");
                 });
@@ -127,13 +127,15 @@ namespace SecondExam.Migrations
                         .WithMany("Materials")
                         .HasForeignKey("AuthorId");
 
-                    b.HasOne("SecondExam.Entities.EducationalMaterialType", "Type")
+                    b.HasOne("SecondExam.Entities.EducationalMaterialType", "EducationalMaterialType")
                         .WithMany()
-                        .HasForeignKey("TypeId");
+                        .HasForeignKey("EducationalMaterialTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Author");
 
-                    b.Navigation("Type");
+                    b.Navigation("EducationalMaterialType");
                 });
 
             modelBuilder.Entity("SecondExam.Entities.EducationalMaterialReview", b =>

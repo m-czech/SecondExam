@@ -1,6 +1,8 @@
-﻿namespace SecondExam.Repository.Contracts
+﻿using SecondExam.Entities;
+
+namespace SecondExam.Repository.Contracts;
+
+public interface IEducationalMaterialRepository
 {
-    public interface IEducationalMaterialRepository
-    {
-    }
+    public void CreateEducationalMaterial(EducationalMaterial material);
 }

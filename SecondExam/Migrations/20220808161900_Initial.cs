@@ -47,7 +47,7 @@ namespace SecondExam.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TypeId = table.Column<int>(type: "int", nullable: true)
+                    EducationalMaterialTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,10 +58,11 @@ namespace SecondExam.Migrations
                         principalTable: "Authors",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_EducationalMaterials_EducationalMaterialTypes_TypeId",
-                        column: x => x.TypeId,
+                        name: "FK_EducationalMaterials_EducationalMaterialTypes_EducationalMaterialTypeId",
+                        column: x => x.EducationalMaterialTypeId,
                         principalTable: "EducationalMaterialTypes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,9 +91,9 @@ namespace SecondExam.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EducationalMaterials_TypeId",
+                name: "IX_EducationalMaterials_EducationalMaterialTypeId",
                 table: "EducationalMaterials",
-                column: "TypeId");
+                column: "EducationalMaterialTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_ReviewedMaterialId",

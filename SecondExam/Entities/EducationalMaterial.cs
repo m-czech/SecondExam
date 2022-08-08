@@ -7,7 +7,8 @@ public class EducationalMaterial
     public string? Title { get; set; }
     public string? Description { get; set; }
     public string? Location { get; set; }
-    public EducationalMaterialType? Type { get; set; }
+    public int EducationalMaterialTypeId { get; set; }
+    public EducationalMaterialType? EducationalMaterialType { get; set; }
     ICollection<EducationalMaterialReview>? Reviews { get; set; }
-    DateTime? PublishingDate { get; set; }
+    DateTime? PublicationDate { get; set; }
 }

@@ -3,7 +3,9 @@
 public interface IRepositoryManager
 {
     public IEducationalMaterialRepository EducationalMaterial { get; }
-    public EducationalMaterialReviewRepository Review { get; }
+    public IEducationalMaterialReviewRepository Review { get; }
+    public IEducationalMaterialTypeRepository EducationalMaterialType { get; }
+    public IAuthorRepository Author { get; }
 
-    public void Save();
+    public Task SaveAsync();
 }
