@@ -8,6 +8,6 @@ public class EducationalMaterial
     public string? Description { get; set; }
     public string? Location { get; set; }
     public EducationalMaterialType? Type { get; set; }
-    IEnumerable<EducationalMaterialReview>? Reviews { get; set; }
+    ICollection<EducationalMaterialReview>? Reviews { get; set; }
     DateTime? PublishingDate { get; set; }
 }
