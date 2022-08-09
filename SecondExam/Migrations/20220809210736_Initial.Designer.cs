@@ -12,7 +12,7 @@ using SecondExam.Repository;
 namespace SecondExam.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20220809183453_Initial")]
+    [Migration("20220809210736_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,15 +53,15 @@ namespace SecondExam.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4fb656ed-6ee6-4724-a771-8c74730fa787",
-                            ConcurrencyStamp = "b73c1c64-ca9f-4512-9a49-35342603d122",
+                            Id = "f6d454bc-c44d-498d-b2db-68e3aafa1062",
+                            ConcurrencyStamp = "6df5aede-c88c-4cd7-b4ff-45c1da81888d",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a972cd21-8450-44ff-ad6b-970fdd73450c",
-                            ConcurrencyStamp = "fcddc420-63df-4e4a-9c57-46101c01f829",
+                            Id = "ba0c3818-efdf-43a1-a882-b65cb8532625",
+                            ConcurrencyStamp = "50f7b55f-d7c7-40b7-bcf5-326dd78b5de2",
                             Name = "user",
                             NormalizedName = "USER"
                         });

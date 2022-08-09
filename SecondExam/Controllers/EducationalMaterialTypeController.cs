@@ -27,7 +27,7 @@ public class EducationalMaterialTypeController : ControllerBase
     /// <response code="200">Found Educational Material Type</response>
     /// <response code="404">Not Found Educational Material Type</response>
     [HttpGet]
-    [Authorize(Roles = "user, admin")]
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> GetSingleAsync(int id)
     {
         var materialType =  await _repository.EducationalMaterialType.GetSingleAsync(id);

@@ -31,23 +31,23 @@ public class UserAuthenticationService : IUserAuthenticationService
 
     private JwtSecurityToken GenerateTokenOptions(SigningCredentials credentials, List<Claim> claims)
     {
-        var settings = _configuration.GetSection("JWT");
-        var options = new JwtSecurityToken
+        var jwtSettings = _configuration.GetSection("JWT");
+        var tokenOptions = new JwtSecurityToken
         (
-            issuer: settings["validIssuer"],
-            audience: settings["validAudience"],
+            issuer: jwtSettings["validIssuer"],
+            audience: jwtSettings["validAudience"],
             claims: claims,
             expires: DateTime.Now.AddDays(5),
             signingCredentials: credentials
         );
 
-        return options;
+        return tokenOptions;
     }
 
     private SigningCredentials GetSigningCredentials()
     {
-        var secretKey = Encoding.UTF8.GetBytes(_configuration["SecretKey"]);
-        var secret = new SymmetricSecurityKey(secretKey);
+        var key = Encoding.UTF8.GetBytes(_configuration["SecretKey"]);
+        var secret = new SymmetricSecurityKey(key);
 
         return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
     }

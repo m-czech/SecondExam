@@ -16,7 +16,7 @@ public static class ServiceExtensions
     configuration)
     {
         var jwtSettings = configuration.GetSection("JWT");
-        var secretKey = jwtSettings["secretKey"];
+        var secretKey = configuration["SecretKey"];
         services.AddAuthentication(opt =>
         {
             opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

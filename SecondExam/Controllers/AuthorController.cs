@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecondExam.DTOs.Author;
 using SecondExam.Repository.Contracts;
@@ -27,7 +26,7 @@ public class AuthorController : ControllerBase
 
     [HttpGet]
     [Route("{id}")]
-    [Authorize(Roles = "user, admin")]
+    
     public async Task<IActionResult> GetAuthor(int id)
     {
         var author = await _repository.Author.GetSingleAsync(id);
