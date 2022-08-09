@@ -15,8 +15,10 @@ public record CreateEducationalMaterialDto
     [MaxLength(255)]
     public string? Location { get; set; }
     [Required]
+    [Range(1, 100000)]
     public int EducationalMaterialTypeId { get; set; }
 
     [Required]
+    [Range(1, 100000)]
     public int AuthorId { get; set; }
 }
