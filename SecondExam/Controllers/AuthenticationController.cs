@@ -69,8 +69,8 @@ public class AuthenticationController : ControllerBase
     ///
     ///     GET
     ///     {
-    ///         "userName": "matczak",
-    ///        "password": "aAle#2gro"
+    ///        "userName": "matcz",
+    ///          "password": "asda@!SA2Dss"
     ///     }
     ///
     /// </remarks>

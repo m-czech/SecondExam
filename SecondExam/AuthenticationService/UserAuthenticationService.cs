@@ -12,7 +12,6 @@ public class UserAuthenticationService : IUserAuthenticationService
 {
     private readonly UserManager<User> _manager;
     private readonly IConfiguration _configuration;
-    // private readonly ILogger _logger;
     private User? _user;
 
     public UserAuthenticationService(UserManager<User> manager, IConfiguration configuration)
@@ -38,7 +37,7 @@ public class UserAuthenticationService : IUserAuthenticationService
             issuer: settings["validIssuer"],
             audience: settings["validAudience"],
             claims: claims,
-            expires: DateTime.Now.AddMinutes(60),
+            expires: DateTime.Now.AddDays(5),
             signingCredentials: credentials
         );
 
@@ -47,7 +46,7 @@ public class UserAuthenticationService : IUserAuthenticationService
 
     private SigningCredentials GetSigningCredentials()
     {
-        var secretKey = Encoding.UTF8.GetBytes(_configuration.GetSection("JWT")["secretKey"]);
+        var secretKey = Encoding.UTF8.GetBytes(_configuration["SecretKey"]);
         var secret = new SymmetricSecurityKey(secretKey);
 
         return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
@@ -75,7 +74,7 @@ public class UserAuthenticationService : IUserAuthenticationService
         var result = _user == null ? false : await _manager.CheckPasswordAsync(_user, user.Password); ;
         if (!result)
         {
-            
+            //TODO Logger
         }
         return result;
     }

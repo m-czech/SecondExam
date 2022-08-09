@@ -14,7 +14,7 @@ builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
 
-builder.Services.ConfigureDbContext();
+builder.Services.ConfigureDbContext(builder.Configuration);
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

@@ -32,8 +32,7 @@ public static class ServiceExtensions
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = jwtSettings["validIssuer"],
                 ValidAudience = jwtSettings["validAudience"],
-                IssuerSigningKey = new
-    SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["SecretKey"]))
             };
         });
     }
@@ -84,8 +83,8 @@ public static class ServiceExtensions
         });
     }
 
-    public static void ConfigureDbContext(this IServiceCollection services)
+    public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<RepositoryContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Initial Catalog=SecondExam;Trusted_Connection=True;MultipleActiveResultSets=true"));
+        services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(configuration["ConnectionString"]));
     }
 }
