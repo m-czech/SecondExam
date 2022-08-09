@@ -16,11 +16,13 @@ public class AuthenticationController : ControllerBase
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
     private IUserAuthenticationService _authService;
-    public AuthenticationController(IMapper mapper, UserManager<User> userManager, IUserAuthenticationService authService)
+    private readonly ILogger _logger;
+    public AuthenticationController(IMapper mapper, UserManager<User> userManager, IUserAuthenticationService authService, ILogger<AuthenticationController> logger)
     {
         _mapper = mapper;
         _userManager = userManager;
         _authService = authService;
+        _logger = logger;
     }
 
     /// <summary>
@@ -42,7 +44,8 @@ public class AuthenticationController : ControllerBase
     /// <response code="201">Location to newly created user</response>
 
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Route("register")]
+    //[Authorize(Roles = "admin")]
     public async Task<IActionResult> RegisterUser(UserForRegistrationDto newUser)
     {
         var user = _mapper.Map<User>(newUser);
@@ -58,26 +61,27 @@ public class AuthenticationController : ControllerBase
 
 
     /// <summary>
-    /// Get all series with Name and Ids
+    /// Authenticate user
     /// </summary>
-    /// <returns>All series in DB</returns>
+    /// <returns>JWT Token</returns>
     /// <remarks>
     /// Sample request:
     ///
     ///     GET
     ///     {
-    ///        "SerieId": "",
-    ///        "SerieName": "",
+    ///         "userName": "matczak",
+    ///        "password": "aAle#2gro"
     ///     }
     ///
     /// </remarks>
-    /// <response code="200">Returns all series</response>
-    /// <response code="401">If the item is null</response>
+    /// <response code="200">Token</response>
+    /// <response code="401">Unauthorized</response>
 
     [HttpPost]
     [Route("login")]
     public async Task<IActionResult> Authenticate(UserForAuthenticationDto user)
     {
+        _logger.LogInformation("User has logged in");
         if (!await _authService.ValidateUser(user)) return Unauthorized();
         return Ok(new { Token = await _authService.CreateToken() });
     }

@@ -4,6 +4,8 @@ using SecondExam.Repository;
 using SecondExam.Repository.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 // Add services to the container.
 builder.Services.ConfigureCors();
