@@ -20,7 +20,8 @@ public class EducationalMaterialReviewController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "USER")]
+    [Authorize(Roles = "user, admin")]
+    [Route("{id}", Name = "ReviewById")]
     public async Task<IActionResult> GetReviews(int materialId)
     {
         var material = await _repository.EducationalMaterial.GetSingleAsync(materialId);
@@ -30,7 +31,7 @@ public class EducationalMaterialReviewController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "USER")]
+    [Authorize(Roles = "user, admin")]
     public async Task<IActionResult> CreateReview(CreateEducationalMaterialReviewDto newReview, int materialId)
     {
         var material = await _repository.EducationalMaterial.GetSingleAsync(materialId);
@@ -41,10 +42,11 @@ public class EducationalMaterialReviewController : ControllerBase
         else material.Reviews.Add(review);
 
         await _repository.SaveAsync();
-        return Ok();
+        return CreatedAtRoute("ReviewById", new { id = material.Id }, material);
     }
 
     [HttpDelete]
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> DeleteReview(int reviewId)
     {
         var review = await _repository.Review.GetSingleByConditionAsync(review => review.Id == reviewId);
@@ -57,7 +59,7 @@ public class EducationalMaterialReviewController : ControllerBase
     }
 
     [HttpPatch]
-    [Authorize(Roles = "USER")]
+    [Authorize(Roles = "user, admin")]
     public async Task<IActionResult> UpdateReview(UpdateEducationalMaterialReviewDto updatedReview, int reviewId)
     {
         var review = await _repository.Review.GetSingleByConditionAsync(review => review.Id == reviewId);

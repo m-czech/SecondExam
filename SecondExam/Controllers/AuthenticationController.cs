@@ -24,7 +24,7 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "ADMIN")]
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> RegisterUser(UserForRegistrationDto newUser)
     {
         var user = _mapper.Map<User>(newUser);

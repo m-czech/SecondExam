@@ -20,7 +20,7 @@ public class EducationalMaterialTypeController : ControllerBase
         _repository = repository;
     }
     [HttpGet]
-    [Authorize(Roles = "USER")]
+    [Authorize(Roles = "user, admin")]
     public async Task<IActionResult> GetSingleAsync(int id)
     {
         var materialType =  await _repository.EducationalMaterialType.GetSingleAsync(id);

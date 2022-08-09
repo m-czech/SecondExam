@@ -19,7 +19,7 @@ public class AuthorController : ControllerBase
     }
     [HttpGet]
     [Route("{id}")]
-    [Authorize(Roles = "USER")]
+    [Authorize(Roles = "user, admin")]
     public async Task<IActionResult> GetAuthor(int id)
     {
         var author = await _repository.Author.GetSingleAsync(id);
