@@ -51,15 +51,15 @@ namespace SecondExam.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2f278339-a9d2-48ce-9312-67e09d01feeb",
-                            ConcurrencyStamp = "c00f4cf2-116c-4745-87a6-641051d87864",
+                            Id = "cb8ed64f-4eb3-4cc3-bed5-6d1ba96291f0",
+                            ConcurrencyStamp = "808fce22-8d4f-4822-adc9-76c1e9e06af9",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "84f0b322-2c0b-484e-99aa-12e73c73a0b6",
-                            ConcurrencyStamp = "d6dc75e7-d943-4405-b013-4ef2e70a3eba",
+                            Id = "21d13909-11e9-489f-85eb-2994be620f0e",
+                            ConcurrencyStamp = "254efc44-d222-473f-9fa8-05e794239142",
                             Name = "user",
                             NormalizedName = "USER"
                         });
@@ -239,7 +239,6 @@ namespace SecondExam.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
