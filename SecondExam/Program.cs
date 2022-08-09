@@ -1,10 +1,20 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SecondExam.Entities.Authorization;
 using SecondExam.Repository;
 using SecondExam.Repository.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAuthentication();
+builder.Services.AddIdentity<User, IdentityRole>(o =>
+{
+    o.Password.RequiredLength = 5;
+})
+    .AddEntityFrameworkStores<RepositoryContext>()
+    .AddDefaultTokenProviders();
+
 builder.Services.AddDbContext<RepositoryContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Initial Catalog=SecondExam;Trusted_Connection=True;MultipleActiveResultSets=true"));
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddControllers();
@@ -24,6 +34,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
