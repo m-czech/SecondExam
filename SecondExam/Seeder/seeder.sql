@@ -28,11 +28,11 @@ VALUES ('Song', 'Educational song');
 ------------------
 
 INSERT INTO dbo.EducationalMaterials (AuthorId, Title, Description, Location, EducationalMaterialTypeId, PublicationDate)
-VALUES (6, 'Solaris', 'Amazing book', 'Norymberska 12', 2, '2019-02-04');
+VALUES (4, 'Solaris', 'Amazing book', 'Norymberska 12', 2, '2019-02-04');
 
 
 INSERT INTO dbo.EducationalMaterials (AuthorId, Title, Description, Location, EducationalMaterialTypeId, PublicationDate)
-VALUES (6, 'The Invincible', 'Futureproof', 'Main library', 2, '2021-04-02');
+VALUES (4, 'The Invincible', 'Futureproof', 'Main library', 2, '2021-04-02');
 
 
 INSERT INTO dbo.EducationalMaterials (AuthorId, Title, Description, Location, EducationalMaterialTypeId, PublicationDate)
@@ -44,7 +44,7 @@ VALUES (2, 'Gryslaw', 'YouTube channel', 'https://www.youtube.com/c/Ryslaw', 1, 
 
 
 INSERT INTO dbo.EducationalMaterials (AuthorId, Title, Description, Location, EducationalMaterialTypeId, PublicationDate)
-VALUES (1 'Still D.R.E', 'Banger', 'https://www.youtube.com/watch?v=_CL6n0FJZpk', 4, '1999-11-15');
+VALUES (1, 'Still D.R.E', 'Banger', 'https://www.youtube.com/watch?v=_CL6n0FJZpk', 4, '1999-11-15');
 
 INSERT INTO dbo.EducationalMaterials (AuthorId, Title, Description, Location, EducationalMaterialTypeId, PublicationDate)
-VALUES (1 'Xxplosive', 'Banger x2', 'https://www.youtube.com/watch?v=wL8nunUIi-U', 4, '1999-12-15');
+VALUES (1, 'Xxplosive', 'Banger x2', 'https://www.youtube.com/watch?v=wL8nunUIi-U', 4, '1999-12-15');

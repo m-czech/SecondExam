@@ -51,15 +51,15 @@ namespace SecondExam.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cb8ed64f-4eb3-4cc3-bed5-6d1ba96291f0",
-                            ConcurrencyStamp = "808fce22-8d4f-4822-adc9-76c1e9e06af9",
+                            Id = "4fb656ed-6ee6-4724-a771-8c74730fa787",
+                            ConcurrencyStamp = "b73c1c64-ca9f-4512-9a49-35342603d122",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "21d13909-11e9-489f-85eb-2994be620f0e",
-                            ConcurrencyStamp = "254efc44-d222-473f-9fa8-05e794239142",
+                            Id = "a972cd21-8450-44ff-ad6b-970fdd73450c",
+                            ConcurrencyStamp = "fcddc420-63df-4e4a-9c57-46101c01f829",
                             Name = "user",
                             NormalizedName = "USER"
                         });
