@@ -19,6 +19,13 @@ public class EducationalMaterialTypeController : ControllerBase
         _mapper = mapper;
         _repository = repository;
     }
+
+    /// <summary>
+    /// Get Educational Material Type by id
+    /// </summary>
+    /// <returns>Educational Material Type</returns>
+    /// <response code="200">Found Educational Material Type</response>
+    /// <response code="404">Not Found Educational Material Type</response>
     [HttpGet]
     [Authorize(Roles = "user, admin")]
     public async Task<IActionResult> GetSingleAsync(int id)

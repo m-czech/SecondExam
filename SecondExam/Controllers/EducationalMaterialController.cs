@@ -18,7 +18,15 @@ public class EducationalMaterialController : ControllerBase
         _repositories = repositories;
         _mapper = mapper;
     }
-    
+
+    /// <summary>
+    /// Create new educational material
+    /// </summary>
+    /// <returns>Location to new resource</returns>
+    /// <response code="204">Created new educational material</response>
+    /// <response code="404">Educational material type not found</response>
+    /// <response code="404">Author not found</response>
+
     [HttpPost]
     [Authorize(Roles = "admin")]
     public async Task<IActionResult> CreateEducationalMaterial(CreateEducationalMaterialDto newMaterial)
@@ -26,7 +34,7 @@ public class EducationalMaterialController : ControllerBase
         var materialType = await _repositories.EducationalMaterialType.GetSingleAsync(newMaterial.EducationalMaterialTypeId);
         if (materialType == null)
         {
-            return NotFound("Specified material id has not been found");
+            return NotFound("Specified material type id has not been found");
         }
 
         var author = await _repositories.Author.GetSingleAsync(newMaterial.AuthorId);
@@ -41,7 +49,14 @@ public class EducationalMaterialController : ControllerBase
         await _repositories.SaveAsync();
         return NoContent();
     }
-    
+
+    /// <summary>
+    /// Get Educational Material by id
+    /// </summary>
+    /// <returns>Educational Material</returns>
+    /// <response code="200">Educational Material</response>
+    /// <response code="404">Educational material not found</response>
+
     [HttpGet]
     [Authorize(Roles = "user, admin")]
     public async Task<IActionResult> GetSingleEducationalMaterial(int id)
@@ -50,6 +65,24 @@ public class EducationalMaterialController : ControllerBase
         if (material == null) return NotFound($"Specified material id: {id} has not been found");
         return Ok(_mapper.Map<GetEducationalMaterialDto>(material));
     }
+
+    /// <summary>
+    /// Update Educational Material
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     {
+    ///        "title": "New title",
+    ///        "description": "New description",
+    ///        "location": "Educational Material resource location",
+    ///        "educationalMaterialTypeId": 2,
+    ///        "authorId": 3
+    ///     }
+    ///
+    /// </remarks>
+    /// <response code="204">Educational Material has been updated</response>
+    /// <response code="404">Educational Material not found</response>
 
     [HttpPatch]
     [Authorize(Roles = "admin")]
@@ -63,8 +96,14 @@ public class EducationalMaterialController : ControllerBase
         materialToUpdate.EducationalMaterialTypeId = updatedMaterial.EducationalMaterialTypeId;
         materialToUpdate.Title = updatedMaterial.Title;
         await _repositories.SaveAsync();
-        return Ok();
+        return NoContent();
     }
+
+    /// <summary>
+    /// Delete Educational Material with specified id
+    /// </summary>
+    /// <response code="204">Educational Material removed</response>
+    /// <response code="404">Educational Material not found</response>
 
     [HttpDelete]
     [Authorize(Roles = "admin")]
@@ -76,6 +115,12 @@ public class EducationalMaterialController : ControllerBase
         await _repositories.SaveAsync();
         return NoContent();
     }
+
+    /// <summary>
+    /// Get Educational Material for given author with average above five
+    /// </summary>
+    /// <returns>Educational Material</returns>
+    /// <response code="200">Educational Materials</response>
 
     [HttpGet]
     [Route("average")]
@@ -93,17 +138,23 @@ public class EducationalMaterialController : ControllerBase
             var average = reviewSum = reviewSum / material.Reviews.Count();
             if (average > 5) materialsFilteredByAuthorAndRating.Add(material);
         }
-
         return Ok(_mapper.Map<IEnumerable<GetEducationalMaterialDto>>(materialsFilteredByAuthorAndRating));
     }
 
+    /// <summary>
+    /// Get Educational Material by type
+    /// </summary>
+    /// <returns>Educational Material</returns>
+    /// <response code="200">Educational materials</response>
+    /// <response code="404">Educational material type not found</response>
+    /// 
     [HttpGet]
-    [Route("type1")]
+    [Route("type")]
     [Authorize(Roles = "admin")]
     public async Task<IActionResult> GetEducationalMaterialByType(int typeId)
     {
         var materialType = await _repositories.EducationalMaterialType.GetSingleAsync(typeId);
-        if (materialType == null) return NotFound($"Specified material id: {typeId} has not been found");
+        if (materialType == null) return NotFound($"Specified material type id: {typeId} has not been found");
 
         var materials = await _repositories.EducationalMaterial.GetAllAsync();
         var filteredMaterials = materials.Where(material => material.EducationalMaterialTypeId == typeId);

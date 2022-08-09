@@ -17,6 +17,14 @@ public class AuthorController : ControllerBase
         _mapper = mapper;
         _repository = repository;
     }
+
+    /// <summary>
+    /// Get Author by id
+    /// </summary>
+    /// <returns>Author</returns>
+    /// <response code="200">Author found</response>
+    /// <response code="404">Author not found</response>
+
     [HttpGet]
     [Route("{id}")]
     [Authorize(Roles = "user, admin")]

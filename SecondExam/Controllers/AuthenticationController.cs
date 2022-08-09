@@ -23,6 +23,24 @@ public class AuthenticationController : ControllerBase
         _authService = authService;
     }
 
+    /// <summary>
+    /// Create new user
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     {
+    ///        "title": "New title",
+    ///        "description": "Material description",
+    ///        "location": "Material location",
+    ///        "educationalMaterialTypeId": t,
+    ///        "authorId": 1
+    ///     }
+    ///
+    /// </remarks>
+    /// <returns>Location to new resource</returns>
+    /// <response code="201">Location to newly created user</response>
+
     [HttpPost]
     [Authorize(Roles = "admin")]
     public async Task<IActionResult> RegisterUser(UserForRegistrationDto newUser)
@@ -34,7 +52,7 @@ public class AuthenticationController : ControllerBase
         {
             await _userManager.AddToRolesAsync(user, newUser.Roles);
         }
-
+        // TODO Change to CreatedAtAction
         return Ok(result);
     }
 
@@ -55,6 +73,7 @@ public class AuthenticationController : ControllerBase
     /// </remarks>
     /// <response code="200">Returns all series</response>
     /// <response code="401">If the item is null</response>
+
     [HttpPost]
     [Route("login")]
     public async Task<IActionResult> Authenticate(UserForAuthenticationDto user)

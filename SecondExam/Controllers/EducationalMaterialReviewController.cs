@@ -19,6 +19,13 @@ public class EducationalMaterialReviewController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Get Review by id
+    /// </summary>
+    /// <returns>Review Type</returns>
+    /// <response code="200">Found Review</response>
+    /// <response code="404">Not Found Review</response>
+
     [HttpGet]
     [Authorize(Roles = "user, admin")]
     [Route("{id}", Name = "ReviewById")]
@@ -29,6 +36,13 @@ public class EducationalMaterialReviewController : ControllerBase
 
         return Ok(_mapper.Map<IEnumerable<GetEducationalMaterialReviewDto>>(material.Reviews));
     }
+
+    /// <summary>
+    /// Create new educational material review
+    /// </summary>
+    /// <returns>Location to new resource</returns>
+    /// <response code="201">Created new review</response>
+    /// <response code="404">Educational material not found</response>
 
     [HttpPost]
     [Authorize(Roles = "user, admin")]
@@ -45,6 +59,13 @@ public class EducationalMaterialReviewController : ControllerBase
         return CreatedAtRoute("ReviewById", new { id = material.Id }, material);
     }
 
+    /// <summary>
+    /// Delete review with spiecified id
+    /// </summary>
+    /// <returns>No content</returns>
+    /// <response code="204">Review removed</response>
+    /// <response code="404">Review not found</response>
+
     [HttpDelete]
     [Authorize(Roles = "admin")]
     public async Task<IActionResult> DeleteReview(int reviewId)
@@ -58,6 +79,21 @@ public class EducationalMaterialReviewController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Update review
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     {
+    ///        "textReview": "New text review",
+    ///        "digitReview": 10
+    ///     }
+    ///
+    /// </remarks>
+    /// <response code="204">No content</response>
+    /// <response code="404">Review not found</response>
+
     [HttpPatch]
     [Authorize(Roles = "user, admin")]
     public async Task<IActionResult> UpdateReview(UpdateEducationalMaterialReviewDto updatedReview, int reviewId)
@@ -69,6 +105,6 @@ public class EducationalMaterialReviewController : ControllerBase
         review.TextReview = updatedReview.TextReview;
 
         await _repository.SaveAsync();
-        return Ok();
+        return NoContent();
     }
 }
