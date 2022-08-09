@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SecondExam.Entities.Authorization;
+using SecondExam.Extensions;
 using SecondExam.Repository;
 using SecondExam.Repository.Contracts;
 
@@ -14,6 +15,7 @@ builder.Services.AddIdentity<User, IdentityRole>(o =>
 })
     .AddEntityFrameworkStores<RepositoryContext>()
     .AddDefaultTokenProviders();
+builder.Services.ConfigureJWT(builder.Configuration);
 
 builder.Services.AddDbContext<RepositoryContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Initial Catalog=SecondExam;Trusted_Connection=True;MultipleActiveResultSets=true"));
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
