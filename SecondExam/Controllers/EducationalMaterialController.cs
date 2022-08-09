@@ -92,7 +92,7 @@ public class EducationalMaterialController : ControllerBase
     }
 
     [HttpGet]
-    [Route("type")]
+    [Route("type1")]
     public async Task<IActionResult> GetEducationalMaterialByType(int typeId)
     {
         var materialType = await _repositories.EducationalMaterialType.GetSingleAsync(typeId);
