@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecondExam.DTOs.EducationalMaterial;
 using SecondExam.Entities;
@@ -19,6 +20,7 @@ public class EducationalMaterialController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> CreateEducationalMaterial(CreateEducationalMaterialDto newMaterial)
     {
         var materialType = await _repositories.EducationalMaterialType.GetSingleAsync(newMaterial.EducationalMaterialTypeId);
@@ -41,6 +43,7 @@ public class EducationalMaterialController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize(Roles = "USER, ADMIN")]
     public async Task<IActionResult> GetSingleEducationalMaterial(int id)
     {
         var material = await _repositories.EducationalMaterial.GetSingleAsync(id);
@@ -49,6 +52,7 @@ public class EducationalMaterialController : ControllerBase
     }
 
     [HttpPatch]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> UpdateEducationalMaterial(int id, UpdateEducationalMaterialDto updatedMaterial)
     {
         var materialToUpdate = await _repositories.EducationalMaterial.GetSingleAsync(id);
@@ -63,6 +67,7 @@ public class EducationalMaterialController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> DeleteEducationalMaterial(int id)
     {
         var materialToDelete = await _repositories.EducationalMaterial.GetSingleAsync(id);
@@ -74,6 +79,7 @@ public class EducationalMaterialController : ControllerBase
 
     [HttpGet]
     [Route("average")]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> GetEducationalMaterialsForGivenAuthorWithAverageReviewsAboveFive(int authorId)
     {
         var fetchedMaterials = await _repositories.EducationalMaterial.GetAllAsync();
@@ -93,6 +99,7 @@ public class EducationalMaterialController : ControllerBase
 
     [HttpGet]
     [Route("type1")]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> GetEducationalMaterialByType(int typeId)
     {
         var materialType = await _repositories.EducationalMaterialType.GetSingleAsync(typeId);

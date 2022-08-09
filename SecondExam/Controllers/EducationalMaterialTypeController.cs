@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecondExam.DTOs.EducationalMaterialType;
 using SecondExam.Entities;
@@ -19,6 +20,7 @@ public class EducationalMaterialTypeController : ControllerBase
         _repository = repository;
     }
     [HttpGet]
+    [Authorize(Roles = "USER")]
     public async Task<IActionResult> GetSingleAsync(int id)
     {
         var materialType =  await _repository.EducationalMaterialType.GetSingleAsync(id);

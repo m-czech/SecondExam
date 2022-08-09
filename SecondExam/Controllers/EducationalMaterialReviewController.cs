@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecondExam.DTOs.EducationalMaterialReview;
 using SecondExam.Entities;
@@ -19,6 +20,7 @@ public class EducationalMaterialReviewController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "USER")]
     public async Task<IActionResult> GetReviews(int materialId)
     {
         var material = await _repository.EducationalMaterial.GetSingleAsync(materialId);
@@ -28,6 +30,7 @@ public class EducationalMaterialReviewController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "USER")]
     public async Task<IActionResult> CreateReview(CreateEducationalMaterialReviewDto newReview, int materialId)
     {
         var material = await _repository.EducationalMaterial.GetSingleAsync(materialId);
@@ -54,6 +57,7 @@ public class EducationalMaterialReviewController : ControllerBase
     }
 
     [HttpPatch]
+    [Authorize(Roles = "USER")]
     public async Task<IActionResult> UpdateReview(UpdateEducationalMaterialReviewDto updatedReview, int reviewId)
     {
         var review = await _repository.Review.GetSingleByConditionAsync(review => review.Id == reviewId);

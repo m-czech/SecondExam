@@ -6,30 +6,40 @@ namespace SecondExam.Extensions;
 
 public static class ServiceExtensions
 {
-    public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
+    public static void ConfigureJWT(this IServiceCollection services, IConfiguration
+    configuration)
     {
-        var tokenSettings = configuration.GetSection("JwtSettings");
-        var secretKey = tokenSettings["secret"];
-
-        services.AddAuthentication(options =>
+        var jwtSettings = configuration.GetSection("JWT");
+        var secretKey = jwtSettings["secretKey"];
+        services.AddAuthentication(opt =>
         {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })
-            .AddJwtBearer(options =>
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
             {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtSettings["validIssuer"],
+                ValidAudience = jwtSettings["validAudience"],
+                IssuerSigningKey = new
+    SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+            };
+        });
+    }
 
-                    ValidIssuer = tokenSettings["validIssuer"],
-                    ValidAudience = tokenSettings["validAudience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
-                };
-            });
-        
+    public static void ConfigureCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy", builder =>
+            builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+        });
     }
 }
